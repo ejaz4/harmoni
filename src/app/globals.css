@@ -1,0 +1,127 @@
+@font-face {
+	font-family: "Outfit";
+	src: url("/fonts/Outfit-font.ttf") format("truetype");
+}
+
+:root {
+	--body-colour: #131313;
+	--text-color-contrast: #ffffff;
+	--font-family: "Outfit", sans-serif;
+
+	--faint-colour: rgba(255, 255, 255, 0.2);
+	--differentiator-colour: rgba(255, 255, 255, 0.06);
+	--differentiator-action-colour: rgba(255, 255, 255, 0.12);
+	--differentiator-active-colour: rgba(255, 255, 255, 0.24);
+
+	--active-placeholder-colour: rgba(255, 255, 255, 0.5);
+
+	--passthrough-inactive: 0.2;
+}
+
+h1 {
+	font-size: 48px;
+}
+
+h2 {
+	font-size: 32px;
+}
+
+h3 {
+	font-size: 24px;
+	font-weight: 600;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+label {
+	font-family: var(--font-family);
+	margin: 0;
+}
+
+body {
+	background-color: var(--body-colour);
+	color: var(--text-color-contrast);
+	font-family: var(--font-family);
+	margin: 0;
+}
+
+a {
+	color: var(--text-color-contrast);
+	text-decoration: none;
+}
+
+input[type="email"],
+input[type="password"],
+input[type="text"] {
+	background-color: var(--differentiator-colour);
+	outline: solid 1px var(--faint-colour);
+	padding: 12px;
+	font-family: var(--font-family);
+	font-size: 18px;
+	border: 0;
+	border-radius: 8px;
+	color: var(--text-color-contrast);
+	line-height: normal;
+	transition: outline 0.3s ease, background-color 0.3s ease;
+}
+
+input[type="email"]::placeholder,
+input[type="password"]::placeholder,
+input[type="text"]::placeholder {
+	color: var(--faint-colour);
+	transition: color 0.3s ease;
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="text"]:focus {
+	outline: solid 1px var(--text-color-contrast);
+	background-color: var(--differentiator-action-colour);
+}
+
+input[type="email"]:focus::placeholder,
+input[type="password"]:focus::placeholder,
+input[type="text"]:focus::placeholder {
+	color: var(--active-placeholder-colour);
+}
+
+button {
+	background-color: var(--differentiator-colour);
+	outline: solid 1px var(--faint-colour);
+	padding: 12px;
+	font-family: var(--font-family);
+	font-size: 18px;
+	border: 0;
+	border-radius: 8px;
+	color: var(--text-color-contrast);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 12px;
+	cursor: pointer;
+	transition: outline 0.3s ease, background-color 0.3s ease;
+}
+
+button:hover {
+	outline: solid 1px var(--text-color-contrast);
+	background-color: var(--differentiator-action-colour);
+}
+
+button:active {
+	background-color: var(--differentiator-active-colour);
+}
+
+a {
+	color: var(--text-color-contrast);
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}

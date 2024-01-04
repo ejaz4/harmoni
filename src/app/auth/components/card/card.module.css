@@ -1,0 +1,8 @@
+.card {
+	display: flex;
+	background-color: var(--differentiator-colour);
+	padding: 64px;
+	box-sizing: border-box;
+	border-radius: 24px;
+	width: fit-content;
+}

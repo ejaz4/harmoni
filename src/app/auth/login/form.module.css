@@ -1,0 +1,23 @@
+.loginContent {
+	display: flex;
+	gap: 32px;
+	flex-direction: column;
+}
+
+.loginText {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+}
+
+.loginText > * {
+	text-align: center;
+}
+
+.form {
+	display: flex;
+	gap: 16px;
+	flex-direction: column;
+	align-items: left;
+}
