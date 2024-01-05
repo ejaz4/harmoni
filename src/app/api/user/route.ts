@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
 			data: {
 				name,
 				username,
-				password,
+				password: newPassword,
 			},
 		});
 	} catch (error: any) {

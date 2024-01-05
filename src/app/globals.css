@@ -71,23 +71,39 @@ input[type="text"] {
 	transition: outline 0.3s ease, background-color 0.3s ease;
 }
 
+input[type="search"] {
+	background-color: var(--differentiator-colour);
+	outline: solid 1px var(--faint-colour);
+	padding: 8px;
+	font-family: var(--font-family);
+	font-size: 18px;
+	border: 0;
+	border-radius: 12px;
+	color: var(--text-color-contrast);
+	line-height: normal;
+	transition: outline 0.3s ease, background-color 0.3s ease;
+}
+
 input[type="email"]::placeholder,
 input[type="password"]::placeholder,
-input[type="text"]::placeholder {
+input[type="text"]::placeholder,
+input[type="search"]::placeholder {
 	color: var(--faint-colour);
 	transition: color 0.3s ease;
 }
 
 input[type="email"]:focus,
 input[type="password"]:focus,
-input[type="text"]:focus {
+input[type="text"]:focus,
+input[type="search"]:focus {
 	outline: solid 1px var(--text-color-contrast);
 	background-color: var(--differentiator-action-colour);
 }
 
 input[type="email"]:focus::placeholder,
 input[type="password"]:focus::placeholder,
-input[type="text"]:focus::placeholder {
+input[type="text"]:focus::placeholder,
+input[type="search"]:focus::placeholder {
 	color: var(--active-placeholder-colour);
 }
 

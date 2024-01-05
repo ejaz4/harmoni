@@ -1,0 +1,25 @@
+.miniProfile {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	gap: 8px;
+	background-color: var(--differentiator-colour);
+	padding: 8px;
+	border-radius: 12px;
+}
+
+.miniProfile:hover {
+	background-color: var(--differentiator-action-colour);
+}
+
+.miniProfile p {
+	pointer-events: none;
+}
+
+.miniProfile:active {
+	background-color: var(--differentiator-active-colour);
+}
+
+.miniProfile img {
+	border-radius: 7px;
+}
