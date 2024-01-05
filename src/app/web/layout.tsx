@@ -5,7 +5,7 @@ export const WebUIRoute = ({ children }: { children: React.ReactNode }) => {
 	return (
 		<div className={styles.app}>
 			<Header />
-			<div>{children}</div>
+			<div className={styles.cover}>{children}</div>
 		</div>
 	);
 };

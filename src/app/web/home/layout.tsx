@@ -1,9 +1,12 @@
+import { Sidebar } from "./components/sidebar";
+import styles from "./home.module.css";
+
 export const HomeUIRoute = ({ children }: { children: React.ReactNode }) => {
 	return (
-		<>
-			<p>Home UI</p>
-			<div>{children}</div>
-		</>
+		<section className={styles.homeLayout}>
+			<Sidebar />
+			<section>{children}</section>
+		</section>
 	);
 };
 

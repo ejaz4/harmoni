@@ -1,9 +1,8 @@
-export const ForYouUIRoute = ({ children }: { children: React.ReactNode }) => {
+export const ForYouUIRoute = () => {
 	return (
-		<>
+		<section>
 			<p>For you UI</p>
-			<div>{children}</div>
-		</>
+		</section>
 	);
 };
 

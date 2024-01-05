@@ -1,0 +1,6 @@
+.homeLayout {
+	display: flex;
+	gap: 24px;
+	width: 100%;
+	height: 100%;
+}
