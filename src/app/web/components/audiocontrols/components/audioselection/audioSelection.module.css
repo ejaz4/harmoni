@@ -1,0 +1,17 @@
+.volumeSlider {
+	max-width: 100px;
+}
+
+.audioSelection {
+	width: 100%;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+	gap: 16px;
+}
+
+.iconAndProp {
+	display: flex;
+	gap: 8px;
+	align-items: center;
+}

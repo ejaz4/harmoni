@@ -1,7 +1,7 @@
-export const ForYouUIRoute = () => {
+const ForYouUIRoute = () => {
 	return (
 		<section>
-			<p>For you UI</p>
+			<h2>For You</h2>
 		</section>
 	);
 };

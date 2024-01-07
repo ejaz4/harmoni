@@ -1,0 +1,34 @@
+.seekbar {
+	appearance: none;
+	width: 100%;
+	height: 4px;
+
+	border-radius: 25px;
+	background-color: var(--differentiator-colour);
+}
+
+.seekbar::-moz-range-progress {
+	appearance: none;
+	width: 100%;
+	height: 4px;
+
+	border-radius: 25px;
+	background-color: var(--text-color-contrast);
+}
+
+.seekbar::-moz-range-thumb {
+	appearance: none;
+	width: 16px;
+	height: 16px;
+
+	visibility: hidden;
+	transform: translateX(0px);
+	border-radius: 50%;
+	border: 0;
+	position: absolute;
+	background-color: var(--text-color-contrast);
+}
+
+.seekbar:hover::-moz-range-thumb {
+	visibility: visible;
+}

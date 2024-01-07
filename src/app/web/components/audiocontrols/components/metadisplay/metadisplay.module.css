@@ -1,0 +1,21 @@
+.metaDisplay {
+	display: flex;
+	justify-content: flex-start;
+	flex-direction: row;
+	gap: 16px;
+	align-items: center;
+}
+
+.metaDisplay img {
+	border-radius: 8px;
+}
+
+.text {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+}
+
+.artist {
+	opacity: 0.5;
+}
