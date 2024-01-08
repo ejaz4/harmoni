@@ -5,18 +5,18 @@ import Image from "next/image";
 import defaultProfile from "@/assets/images/default-profile.jpg";
 import { IDRequest } from "@/app/api/user/id/route";
 import { useEffect, useState } from "react";
+import { redirect } from "next/navigation";
 
 export const MiniProfile = () => {
-	const token = localStorage.getItem("token");
-	let connectedID = localStorage.getItem("connectedID");
-
 	const [fullName, setFullName] = useState("");
 	const [profilePhoto, setProfilePhotoUrl] = useState(null);
 
 	const loadProfile = async () => {
+		const token = localStorage.getItem("token");
+		let connectedID = localStorage.getItem("connectedID");
+
 		if (!token) {
-			alert("You are not logged in.");
-			return;
+			return redirect("/auth");
 		}
 
 		if (!connectedID) {

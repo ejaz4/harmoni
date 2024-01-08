@@ -13,29 +13,55 @@ import { SeekBar } from "../seekbar";
 import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
 import { fancyTimeFormat } from "@/lib/formatting";
 
-export const AudioControls = ({}: {}) => {
+export const AudioControls = ({
+	setTimeUpdateFunc,
+	setPlayFunc,
+	setPauseFunc,
+	setEndedFunc,
+	setDurationFunc,
+}: {
+	setTimeUpdateFunc: React.Dispatch<
+		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+	>;
+	setPlayFunc: React.Dispatch<
+		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+	>;
+	setPauseFunc: React.Dispatch<
+		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+	>;
+	setEndedFunc: React.Dispatch<
+		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+	>;
+	setDurationFunc: React.Dispatch<
+		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+	>;
+}) => {
 	const [currentTime, setCurrentTime] = useState(0);
 	const [playing, setPlaying] = useState(false);
 	const [duration, setDuration] = useState(0);
 	const [repeat, setRepeat] = useState(false);
 	const [shuffle, setShuffle] = useState(false);
 
+	setTimeUpdateFunc(() => {
+		setCurrentTime(currentTime);
+	});
+
 	useEffect(() => {
 		const audioElem = document.getElementById("audio") as HTMLAudioElement;
 
-		audioElem.addEventListener("timeupdate", () => {
+		setTimeUpdateFunc(() => {
 			setCurrentTime(audioElem.currentTime);
 		});
 
-		audioElem.addEventListener("durationchange", () => {
+		setDurationFunc(() => {
 			setDuration(audioElem.duration);
 		});
 
-		audioElem.addEventListener("play", () => {
+		setPlayFunc(() => {
 			setPlaying(true);
 		});
 
-		audioElem.addEventListener("pause", () => {
+		setPauseFunc(() => {
 			setPlaying(false);
 		});
 	}, []);

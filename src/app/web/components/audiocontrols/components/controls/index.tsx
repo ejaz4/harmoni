@@ -1,9 +1,13 @@
-export const play = (id: string) => {
+export const play = (id?: string) => {
 	const audio = document.getElementById("audio") as HTMLAudioElement;
 
-	audio.src = `/api/play/${id}`;
-	audio.currentTime = 0;
-	audio.play();
+	if (id) {
+		audio.src = `/api/play/${id}`;
+		audio.currentTime = 0;
+		audio.play();
+	} else {
+		audio.play();
+	}
 };
 
 export const resume = () => {
