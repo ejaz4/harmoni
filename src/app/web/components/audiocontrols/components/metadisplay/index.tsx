@@ -16,6 +16,7 @@ export const MetaDisplay = async ({ id }: { id: string }) => {
 		isExplicit: false,
 		duration: {
 			label: "0:00",
+			totalSeconds: 0,
 		},
 	});
 
@@ -37,26 +38,38 @@ export const MetaDisplay = async ({ id }: { id: string }) => {
 	if (meta.youtubeId == id) {
 		return (
 			<div className={styles.metaDisplay}>
-				<Image
-					src={meta?.thumbnailUrl}
-					height={60}
-					width={60}
-					alt={""}
-				/>
+				{meta?.thumbnailUrl && (
+					<Image
+						src={meta?.thumbnailUrl}
+						height={60}
+						width={60}
+						alt={""}
+					/>
+				)}
 				<div className={styles.text}>
 					<Link href="/web/home/">{meta.title}</Link>
 
-					<div className={styles.artist}>
-						{meta.artists.map((artist, _) => (
-							<>
-								<Link href="/web/home/">{artist.name}</Link>
-								{artist.name !==
-								meta.artists[meta.artists.length - 1].name
-									? ", "
-									: ""}
-							</>
-						))}
-					</div>
+					{meta.artists && (
+						<div className={styles.artist}>
+							{meta.artists.map((artist, _) => (
+								<>
+									<Link href="/web/home/">{artist.name}</Link>
+									{() => {
+										if (meta.artists) {
+											return artist.name !==
+												meta.artists[
+													meta.artists.length - 1
+												].name
+												? ", "
+												: "";
+										} else {
+											return "";
+										}
+									}}
+								</>
+							))}
+						</div>
+					)}
 				</div>
 			</div>
 		);

@@ -36,3 +36,13 @@
 .seekbar span {
 	font-variant-numeric: tabular-nums;
 }
+
+.toggled {
+	background-color: var(--text-color-contrast);
+	color: var(--body-colour);
+}
+
+.toggled:hover {
+	background-color: var(--text-color-contrast);
+	color: var(--body-colour);
+}

@@ -44,11 +44,15 @@ export const verifyToken = async (token: string, secure?: boolean) => {
 			secure: true,
 			validUntil: true,
 			valid: true,
+			userId: true,
 		},
 	});
 
 	if (!tokenQuery) {
-		return false;
+		return {
+			valid: false,
+			userId: null,
+		};
 	}
 
 	if (tokenQuery.id == token) {
@@ -56,12 +60,21 @@ export const verifyToken = async (token: string, secure?: boolean) => {
 			if (tokenQuery.validUntil > new Date()) {
 				if (secure) {
 					if (tokenQuery.secure) {
-						return true;
+						return {
+							valid: true,
+							userId: tokenQuery.userId,
+						};
 					} else {
-						return false;
+						return {
+							valid: false,
+							userId: null,
+						};
 					}
 				} else {
-					return true;
+					return {
+						valid: true,
+						userId: tokenQuery.userId,
+					};
 				}
 			} else {
 				const updateToken = await prisma.token.update({
@@ -72,10 +85,16 @@ export const verifyToken = async (token: string, secure?: boolean) => {
 						valid: false,
 					},
 				});
-				return false;
+				return {
+					valid: false,
+					userId: null,
+				};
 			}
 		} else {
-			return false;
+			return {
+				valid: false,
+				userId: null,
+			};
 		}
 	}
 };

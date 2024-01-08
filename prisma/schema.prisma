@@ -60,12 +60,42 @@ model PlaylistEntry {
   userId     String?
 }
 
+model Artist {
+  id        String   @id @unique @default(uuid())
+  youtubeId String?  @unique
+  name      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  Album     Album[]
+  Song      Song[]
+}
+
+model Album {
+  id           String   @id @unique @default(uuid())
+  youtubeId    String?  @unique
+  name         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  thumbnailUrl String?
+  Song         Song[]
+  Artist       Artist[]
+  artistId     String?
+}
+
 model Song {
   id            String          @id @default(uuid())
+  youtubeId     String?         @unique
   name          String
-  url           String
-  ytId          String          @unique
   createdAt     DateTime        @default(now())
+  isExplicit    Boolean         @default(false)
+  duration      Int             @default(0)
   updatedAt     DateTime        @updatedAt
+  thumbnailUrl  String?
   PlaylistEntry PlaylistEntry[]
+
+  Artist   Artist[]
+  artistId String?
+
+  Album   Album?  @relation(fields: [albumId], references: [id])
+  albumId String?
 }

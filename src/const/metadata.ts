@@ -4,12 +4,17 @@ export type Artist = {
 };
 
 export type Song = {
-	youtubeId: string;
-	title: string;
-	artists: Artist[];
-	thumbnailUrl: string;
-	isExplicit: boolean;
-	duration: {
+	youtubeId?: string;
+	title?: string;
+	thumbnailUrl?: string;
+	artists?: {
+		name: string;
+		id?: string;
+	}[];
+	album?: string;
+	isExplicit?: boolean;
+	duration?: {
 		label: string;
+		totalSeconds: number;
 	};
 };

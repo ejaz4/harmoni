@@ -4,6 +4,8 @@ import fs from "fs";
 import { join } from "path";
 import { tmpdir } from "os";
 import { searchMusics } from "node-youtube-music";
+import { prisma } from "@/lib/prisma";
+import { fancyTimeFormat } from "@/lib/formatting";
 
 export async function GET(
 	request: NextRequest,
@@ -18,54 +20,67 @@ export async function GET(
 		return false;
 	}
 
-	if (!fs.existsSync(join(tmpdir(), "harmoni-tmp"))) {
-		fs.mkdirSync(join(tmpdir(), "harmoni-tmp"));
-	}
+	const songEntry = await prisma.song.findUnique({
+		where: {
+			youtubeId: params.params.id,
+		},
+		select: {
+			youtubeId: true,
+			name: true,
+			thumbnailUrl: true,
+			isExplicit: true,
+			duration: true,
+			Album: {
+				select: {
+					name: true,
+					id: true,
+				},
+			},
+			Artist: {
+				select: {
+					name: true,
+					id: true,
+				},
+			},
+		},
+	});
 
-	const cached = loadFromCache("manifest.json", "meta", params.params.id);
-
-	if (!cached) {
+	if (!songEntry) {
 		let apiResponse = await searchMusics(params.params.id);
 
 		if (apiResponse.length > 0) {
 			const manifest = apiResponse[0];
-			fs.writeFileSync(
-				join(tmpdir(), "harmoni-tmp", `${params.params.id}.json`),
-				JSON.stringify(manifest)
-			);
 
-			addToCache(
-				join(tmpdir(), "harmoni-tmp", `${params.params.id}.json`),
-				"meta",
-				params.params.id,
-				"manifest.json"
-			);
-
-			console.log("RAW metadata!");
 			if (!server) {
 				return NextResponse.json(manifest, { status: 200 });
 			} else {
 				return manifest;
 			}
+
+			return;
 		}
+
+		return;
 	}
 
-	const fileCacheLocation = loadFromCache(
-		"manifest.json",
-		"meta",
-		params.params.id
-	);
+	const songProcessed = {
+		youtubeId: songEntry.youtubeId,
+		title: songEntry.name,
+		thumbnailUrl: songEntry.thumbnailUrl,
+		album: songEntry.Album,
+		isExplicit: songEntry.isExplicit,
+		duration: {
+			label: fancyTimeFormat(songEntry.duration),
+			totalSeconds: songEntry.duration,
+		},
+		artists: songEntry.Artist,
+	};
 
-	if (fileCacheLocation != false && typeof fileCacheLocation == "string") {
-		const file = fs.readFileSync(fileCacheLocation);
-
-		console.log("Cached metadata!");
-		if (!server) {
-			return NextResponse.json(JSON.parse(file.toString()), {
-				status: 200,
-			});
-		} else {
-			return JSON.parse(file.toString());
-		}
+	if (!server) {
+		return NextResponse.json(songProcessed, {
+			status: 200,
+		});
+	} else {
+		return songEntry;
 	}
 }
