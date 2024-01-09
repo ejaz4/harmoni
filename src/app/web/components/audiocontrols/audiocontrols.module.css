@@ -4,6 +4,10 @@
 	justify-content: space-between;
 	align-items: center;
 	width: 100%;
+	padding-left: var(--page-gap);
+	padding-right: var(--page-gap);
+	padding-bottom: var(--page-gap);
+	box-sizing: border-box;
 }
 
 .buttons {

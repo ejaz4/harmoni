@@ -1,10 +1,6 @@
 "use client";
-import { Suspense, use, useEffect, useState } from "react";
-import { play, pause, resume } from "./components/controls";
-import { SkipBack, Play, Pause, SkipForward } from "lucide-react";
+import { Suspense, useEffect, useMemo, useState } from "react";
 import styles from "./audiocontrols.module.css";
-import { SeekBar } from "./components/seekbar";
-import { VolumeSlider } from "./components/audioselection/volumeSlider";
 import { MetaDisplay, MetaDisplaySkeleton } from "./components/metadisplay";
 import { AudioControls } from "./components/uiControls";
 import { AudioSelection } from "./components/audioselection";
@@ -17,22 +13,36 @@ export const AudioBar = ({
 	setDurationFunc,
 }: {
 	setTimeUpdateFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 	setPlayFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 	setPauseFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 	setEndedFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 	setDurationFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 }) => {
 	const [currentID, setCurrentID] = useState("");
+	const metaDisplay = useMemo(
+		() => <MetaDisplay id={currentID} />,
+		[currentID]
+	);
 
 	useEffect(() => {
 		const audioElem = document.getElementById("audio") as HTMLAudioElement;
@@ -50,7 +60,7 @@ export const AudioBar = ({
 	return (
 		<div className={styles.nowPlaying}>
 			<Suspense fallback={<MetaDisplaySkeleton />}>
-				<MetaDisplay id={currentID} />
+				{metaDisplay}
 			</Suspense>
 			<AudioControls
 				setTimeUpdateFunc={setTimeUpdateFunc}

@@ -14,12 +14,12 @@ export const TopSongResult = ({
 	time,
 	id,
 }: {
-	title: string;
-	artists: Artist[];
-	explicit: boolean;
-	thumbnailUrl: string;
-	time: string;
-	id: string;
+	title?: string;
+	artists?: Artist[];
+	explicit?: boolean;
+	thumbnailUrl?: string;
+	time?: string;
+	id?: string;
 }) => {
 	return (
 		<div
@@ -28,24 +28,33 @@ export const TopSongResult = ({
 			}}
 			className={styles.result}
 		>
-			<Image src={thumbnailUrl} alt={""} width={120} height={120} />
+			{thumbnailUrl && (
+				<Image src={thumbnailUrl} alt={""} width={120} height={120} />
+			)}
 			<div className={styles.bigResult}>
 				<div>
 					<h3>
 						{title} {explicit && "🅴"}
 					</h3>
 					<label>
-						{artists.map((artist, _) => (
+						{artists && (
 							<>
-								<Link
-									href={`/web/artist/${artist.id}`}
-									key={artist.id}
-								>
-									{artist.name}
-								</Link>
-								{_ + 1 != artists.length ? ", " : ""}
+								{artists.map((artist, _) => (
+									<>
+										<Link
+											href={`/web/artist/${artist.id}`}
+											key={artist.id}
+											onClick={(e) => {
+												e.stopPropagation();
+											}}
+										>
+											{artist.name}
+										</Link>
+										{_ + 1 != artists.length ? ", " : ""}
+									</>
+								))}
 							</>
-						))}
+						)}
 					</label>
 				</div>
 
@@ -63,12 +72,12 @@ export const OtherSongResult = ({
 	time,
 	id,
 }: {
-	title: string;
-	artists: Artist[];
-	explicit: boolean;
-	thumbnailUrl: string;
-	time: string;
-	id: string;
+	title?: string;
+	artists?: Artist[];
+	explicit?: boolean;
+	thumbnailUrl?: string;
+	time?: string;
+	id?: string;
 }) => {
 	return (
 		<div
@@ -77,24 +86,30 @@ export const OtherSongResult = ({
 			}}
 			className={styles.result}
 		>
-			<Image src={thumbnailUrl} alt={""} width={60} height={60} />
+			{thumbnailUrl && (
+				<Image src={thumbnailUrl} alt={""} width={60} height={60} />
+			)}
 			<div className={styles.smallResult}>
 				<div>
 					<h3>
 						{title} {explicit && "🅴"}
 					</h3>
 					<label>
-						{artists.map((artist, _) => (
+						{artists && (
 							<>
-								<Link
-									href={`/web/artist/${artist.id}`}
-									key={artist.id}
-								>
-									{artist.name}
-								</Link>
-								{_ + 1 != artists.length ? ", " : ""}
+								{artists.map((artist, _) => (
+									<>
+										<Link
+											href={`/web/artist/${artist.id}`}
+											key={artist.id}
+										>
+											{artist.name}
+										</Link>
+										{_ + 1 != artists.length ? ", " : ""}
+									</>
+								))}
 							</>
-						))}
+						)}
 					</label>
 				</div>
 

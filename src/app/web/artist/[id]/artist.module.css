@@ -1,0 +1,4 @@
+.artistContainer {
+	padding-left: var(--page-gap);
+	padding-right: var(--page-gap);
+}

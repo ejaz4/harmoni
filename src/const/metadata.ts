@@ -1,4 +1,4 @@
-export type Artist = {
+export type ArtistMini = {
 	name: string;
 	id: string;
 };
@@ -10,6 +10,7 @@ export type Song = {
 	artists?: {
 		name: string;
 		id?: string;
+		youtubeId?: string;
 	}[];
 	album?: string;
 	isExplicit?: boolean;
@@ -17,4 +18,13 @@ export type Song = {
 		label: string;
 		totalSeconds: number;
 	};
+};
+
+export type Artist = {
+	id?: string;
+	youtubeId?: string;
+	name?: string;
+	createdAt?: string;
+	updatedAt?: string;
+	Song?: Song[];
 };

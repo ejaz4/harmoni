@@ -13,11 +13,11 @@ export async function GET(
 	server?: boolean
 ) {
 	if (!params) {
-		return false;
+		return NextResponse.json({}, { status: 404 });
 	}
 
 	if (!params.params.id) {
-		return false;
+		return NextResponse.json({}, { status: 404 });
 	}
 
 	const songEntry = await prisma.song.findUnique({
@@ -39,7 +39,7 @@ export async function GET(
 			Artist: {
 				select: {
 					name: true,
-					id: true,
+					youtubeId: true,
 				},
 			},
 		},
@@ -51,16 +51,10 @@ export async function GET(
 		if (apiResponse.length > 0) {
 			const manifest = apiResponse[0];
 
-			if (!server) {
-				return NextResponse.json(manifest, { status: 200 });
-			} else {
-				return manifest;
-			}
-
-			return;
+			return NextResponse.json(manifest, { status: 200 });
 		}
 
-		return;
+		return NextResponse.json({}, { status: 404 });
 	}
 
 	const songProcessed = {
@@ -76,11 +70,7 @@ export async function GET(
 		artists: songEntry.Artist,
 	};
 
-	if (!server) {
-		return NextResponse.json(songProcessed, {
-			status: 200,
-		});
-	} else {
-		return songEntry;
-	}
+	return NextResponse.json(songProcessed, {
+		status: 200,
+	});
 }

@@ -2,5 +2,7 @@
 	display: flex;
 	gap: 24px;
 	width: 100%;
+	padding-left: var(--page-gap);
+	padding-right: var(--page-gap);
 	height: 100%;
 }

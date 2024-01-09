@@ -53,7 +53,11 @@ export const MetaDisplay = async ({ id }: { id: string }) => {
 						<div className={styles.artist}>
 							{meta.artists.map((artist, _) => (
 								<>
-									<Link href="/web/home/">{artist.name}</Link>
+									<Link
+										href={`/web/artist/${artist.youtubeId}`}
+									>
+										{artist.name}
+									</Link>
 									{() => {
 										if (meta.artists) {
 											return artist.name !==

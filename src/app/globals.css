@@ -16,6 +16,8 @@
 	--active-placeholder-colour: rgba(255, 255, 255, 0.5);
 
 	--passthrough-inactive: 0.2;
+
+	--page-gap: 32px;
 }
 
 h1 {

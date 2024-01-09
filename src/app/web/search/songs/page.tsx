@@ -40,7 +40,7 @@ const SongResults = async ({ q }: { q: string }) => {
 						title={topSong.title}
 						artists={topSong.artists}
 						explicit={topSong.isExplicit}
-						time={topSong.duration.label}
+						time={topSong.duration?.label}
 						id={topSong.youtubeId}
 					/>
 				</>
@@ -57,7 +57,7 @@ const SongResults = async ({ q }: { q: string }) => {
 								title={song.title}
 								artists={song.artists}
 								explicit={song.isExplicit}
-								time={song.duration.label}
+								time={song.duration?.label}
 								id={song.youtubeId}
 							/>
 						))}

@@ -21,19 +21,29 @@ export const AudioControls = ({
 	setDurationFunc,
 }: {
 	setTimeUpdateFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 	setPlayFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 	setPauseFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 	setEndedFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 	setDurationFunc: React.Dispatch<
-		React.SetStateAction<React.ReactEventHandler<HTMLAudioElement>>
+		React.SetStateAction<
+			React.ReactEventHandler<HTMLAudioElement> | undefined
+		>
 	>;
 }) => {
 	const [currentTime, setCurrentTime] = useState(0);
@@ -42,51 +52,56 @@ export const AudioControls = ({
 	const [repeat, setRepeat] = useState(false);
 	const [shuffle, setShuffle] = useState(false);
 
-	setTimeUpdateFunc(() => {
-		setCurrentTime(currentTime);
-	});
-
 	useEffect(() => {
 		const audioElem = document.getElementById("audio") as HTMLAudioElement;
 
-		setTimeUpdateFunc(() => {
-			setCurrentTime(audioElem.currentTime);
-		});
+		if (setTimeUpdateFunc) {
+			setTimeUpdateFunc(() => () => {
+				setCurrentTime(audioElem.currentTime);
+			});
+		}
 
-		setDurationFunc(() => {
-			setDuration(audioElem.duration);
-		});
+		if (setDurationFunc) {
+			setDurationFunc(() => () => {
+				setDuration(audioElem.duration);
+			});
+		}
 
-		setPlayFunc(() => {
-			setPlaying(true);
-		});
+		if (setPlayFunc) {
+			setPlayFunc(() => () => {
+				setPlaying(true);
+			});
+		}
 
-		setPauseFunc(() => {
-			setPlaying(false);
-		});
+		if (setPauseFunc) {
+			setPauseFunc(() => () => {
+				setPlaying(false);
+			});
+		}
+
+		if (setEndedFunc) {
+			setEndedFunc(() => () => {
+				console.log("Ended", repeat);
+				if (repeat) {
+					console.log("Repeating");
+					audioElem.currentTime = 0;
+					audioElem.play();
+				}
+			});
+		}
 	}, []);
 
 	useEffect(() => {
-		const endedEventListener = () => {
-			const audioElem = document.getElementById(
-				"audio"
-			) as HTMLAudioElement;
+		const audioElem = document.getElementById("audio") as HTMLAudioElement;
 
-			console.log(repeat);
+		setEndedFunc(() => () => {
+			console.log("Ended", repeat);
 			if (repeat) {
-				console.log(repeat);
+				console.log("Repeating");
 				audioElem.currentTime = 0;
 				audioElem.play();
 			}
-		};
-
-		const audioElem = document.getElementById("audio") as HTMLAudioElement;
-
-		console.log("removing event listener");
-		audioElem.removeEventListener("ended", endedEventListener);
-
-		console.log("adding event listener");
-		audioElem.addEventListener("ended", endedEventListener);
+		});
 	}, [repeat]);
 
 	return (
