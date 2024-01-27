@@ -1,8 +1,12 @@
 "use client";
 
-import styles from "../../songs.module.css";
+import styles from "./results.module.css";
 import Image from "next/image";
-import { play } from "@/app/web/components/audiocontrols/components/controls";
+import {
+	play,
+	setQueue,
+	setQueuePosition,
+} from "@/app/web/components/audiocontrols/components/controls";
 import Link from "next/link";
 import { Artist, Song } from "@/const/metadata";
 
@@ -13,6 +17,8 @@ export const TopSongResult = ({
 	thumbnailUrl,
 	time,
 	id,
+	proposedQueue,
+	queuePosition,
 }: {
 	title?: string;
 	artists?: Artist[];
@@ -20,11 +26,16 @@ export const TopSongResult = ({
 	thumbnailUrl?: string;
 	time?: string;
 	id?: string;
+	proposedQueue: Song[];
+	queuePosition: number;
 }) => {
 	return (
 		<div
-			onClick={() => {
-				play(id);
+			onClick={(e) => {
+				e.stopPropagation();
+				setQueue(proposedQueue);
+				setQueuePosition(queuePosition);
+				play();
 			}}
 			className={styles.result}
 		>
@@ -71,6 +82,8 @@ export const OtherSongResult = ({
 	thumbnailUrl,
 	time,
 	id,
+	proposedQueue,
+	queuePosition,
 }: {
 	title?: string;
 	artists?: Artist[];
@@ -78,11 +91,16 @@ export const OtherSongResult = ({
 	thumbnailUrl?: string;
 	time?: string;
 	id?: string;
+	proposedQueue: Song[];
+	queuePosition: number;
 }) => {
 	return (
 		<div
-			onClick={() => {
-				play(id);
+			onClick={(e) => {
+				e.stopPropagation();
+				setQueue(proposedQueue);
+				setQueuePosition(queuePosition);
+				play();
 			}}
 			className={styles.result}
 		>
@@ -102,6 +120,9 @@ export const OtherSongResult = ({
 										<Link
 											href={`/web/artist/${artist.id}`}
 											key={artist.id}
+											onClick={(e) => {
+												e.stopPropagation();
+											}}
 										>
 											{artist.name}
 										</Link>

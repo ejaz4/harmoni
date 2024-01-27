@@ -6,6 +6,14 @@ import { Song } from "@/const/metadata";
 import styles from "./metadisplay.module.css";
 import Link from "next/link";
 import Skeleton from "react-loading-skeleton";
+import {
+	nextTrack,
+	pause,
+	play,
+	previousTrack,
+	resume,
+	seekTo,
+} from "../controls";
 
 export const MetaDisplay = async ({ id }: { id: string }) => {
 	const [meta, setMeta] = useState<Song>({
@@ -20,9 +28,7 @@ export const MetaDisplay = async ({ id }: { id: string }) => {
 		},
 	});
 
-	useEffect(() => {
-		console.log(meta);
-	}, [meta]);
+	useEffect(() => {}, [meta]);
 
 	useEffect(() => {
 		(async () => {
@@ -30,12 +36,36 @@ export const MetaDisplay = async ({ id }: { id: string }) => {
 				const search = await fetch(`/api/meta/${id}`);
 				const metaInfo = await search.json();
 				setMeta(metaInfo);
-				console.log(meta);
 			}
 		})();
 	}, [id]);
 
 	if (meta.youtubeId == id) {
+		console.log("Broadcasting new metadata");
+		navigator.mediaSession.metadata = new MediaMetadata({
+			title: meta.title,
+			artist: meta.artists?.map((artist) => artist.name).join(", "),
+			artwork: meta.thumbnailUrl
+				? [
+						{
+							src: meta.thumbnailUrl,
+							sizes: "96x96",
+							type: "image/png",
+						},
+				  ]
+				: [],
+		});
+
+		navigator.mediaSession.setActionHandler("nexttrack", nextTrack);
+
+		navigator.mediaSession.setActionHandler("previoustrack", previousTrack);
+
+		navigator.mediaSession.setActionHandler("pause", pause);
+
+		navigator.mediaSession.setActionHandler("play", resume);
+
+		navigator.mediaSession.setActionHandler("seekto", seekTo);
+
 		return (
 			<div className={styles.metaDisplay}>
 				{meta?.thumbnailUrl && (

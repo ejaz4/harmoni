@@ -30,18 +30,22 @@ const SongResults = async ({ q }: { q: string }) => {
 		searchResults.slice(1),
 	];
 
+	const proposedQueue = [topSong, ...otherSongs];
+
 	return (
 		<section className={styles.songsResults}>
 			{topSong && (
 				<>
 					<h3>Most Relevant</h3>
 					<TopSongResult
+						proposedQueue={proposedQueue}
 						thumbnailUrl={topSong.thumbnailUrl}
 						title={topSong.title}
 						artists={topSong.artists}
 						explicit={topSong.isExplicit}
 						time={topSong.duration?.label}
 						id={topSong.youtubeId}
+						queuePosition={0}
 					/>
 				</>
 			)}
@@ -50,7 +54,7 @@ const SongResults = async ({ q }: { q: string }) => {
 				<>
 					<h3>Other songs</h3>
 					<section className={styles.otherSongsResults}>
-						{otherSongs.map((song: Song) => (
+						{otherSongs.map((song: Song, index: number) => (
 							<OtherSongResult
 								key={song.youtubeId}
 								thumbnailUrl={song.thumbnailUrl}
@@ -59,6 +63,8 @@ const SongResults = async ({ q }: { q: string }) => {
 								explicit={song.isExplicit}
 								time={song.duration?.label}
 								id={song.youtubeId}
+								proposedQueue={proposedQueue}
+								queuePosition={index + 1}
 							/>
 						))}
 					</section>

@@ -20,10 +20,41 @@ export const searchSong = async (query: string) => {
 	const searchRequest = await searchMusics(query);
 
 	(async () => {
-		let songID: string[] = [];
-		let artistID: string[] = ["none"];
+		let songsRepeat = searchRequest;
 
-		for (const song of searchRequest) {
+		let songID: string[] = [];
+		let artistID: string[] = ["unknown"];
+
+		// for (const song of songsRepeat) {
+		// 	if (song.artists) {
+		// 		for (let artist of song.artists) {
+		// 			if (!artist.id) {
+		// 				console.log(artist.name, "has no id");
+		// 				artist = {
+		// 					name: "Unknown",
+		// 					id: "unknown",
+		// 				};
+		// 			}
+		// 		}
+		// 	}
+		// }
+
+		songsRepeat.forEach((song, songIndex) => {
+			if (songsRepeat[songIndex].artists && song.artists) {
+				song.artists.forEach((artist, artistIndex) => {
+					if (!artist.id) {
+						// songsRepeat[songIndex].artists?[artistIndex] = {
+						// 			name: "Unknown",
+						// 			id: "unknown",
+						// 	  };
+					}
+				});
+			}
+		});
+
+		// console.log(songsRepeat.map((song) => song.artists));
+
+		for (const song of songsRepeat) {
 			if (song.youtubeId) {
 				songID.push(song.youtubeId);
 			}
@@ -32,6 +63,8 @@ export const searchSong = async (query: string) => {
 				for (const artist of song.artists) {
 					if (artist.id) {
 						artistID.push(artist.id);
+					} else {
+						artistID.push("unknown");
 					}
 				}
 			}
@@ -48,12 +81,17 @@ export const searchSong = async (query: string) => {
 			},
 		});
 
-		let artistsNotInDB = searchRequest.filter((song) => {
+		// console.log(artistsInDB);
+		let artistsNotInDB = songsRepeat.filter((song) => {
 			if (song.artists) {
 				for (const artist of song.artists) {
-					return !artistsInDB.find(
-						(artistInDB) => artistInDB.youtubeId === artist.id
-					);
+					if (!artist.id) {
+						return false;
+					} else {
+						return !artistsInDB.find(
+							(artistInDB) => artistInDB.youtubeId === artist.id
+						);
+					}
 				}
 			}
 		});
@@ -69,24 +107,42 @@ export const searchSong = async (query: string) => {
 					}
 
 					if (artistInSong.id) {
-						console.log(artistInSong.name);
-						try {
-							await prisma.artist.create({
-								data: {
-									youtubeId: artistInSong.id as string,
-									name: artistInSong.name,
-								},
-							});
+						console.log(artistInSong.name, artistInSong.id);
+						if (artistInSong.id) {
+							try {
+								await prisma.artist.create({
+									data: {
+										youtubeId: artistInSong.id as string,
+										name: artistInSong.name,
+									},
+								});
 
-							doneArtists.push(artistInSong.id as string);
-						} catch (e) {
-							console.log("Catched", e);
+								doneArtists.push(artistInSong.id as string);
+							} catch (e) {
+								console.log("Catched", e);
+							}
+						} else {
+							try {
+								await prisma.artist.create({
+									data: {
+										youtubeId: "unknown",
+										name: "Unknown Artist",
+									},
+								});
+
+								doneArtists.push(artistInSong.id as string);
+							} catch (e) {
+								console.log("Catched", e);
+							}
 						}
+					} else {
+						doneArtists.push();
 					}
 				}
 			}
 		}
 
+		// console.log("Finding Songs in Database");
 		const songsInDB = await prisma.song.findMany({
 			where: {
 				youtubeId: {
@@ -98,14 +154,15 @@ export const searchSong = async (query: string) => {
 			},
 		});
 
-		const songsNotInDB = searchRequest.filter((song) => {
+		// console.log("GOT all songs");
+
+		const songsNotInDB = songsRepeat.filter((song) => {
 			return !songsInDB.find(
 				(songInDB) => songInDB.youtubeId === song.youtubeId
 			);
 		});
 
 		for (const song of songsNotInDB) {
-			console.log("Creating song", song.title);
 			if (song.artists) {
 				try {
 					await prisma.song.create({
@@ -116,14 +173,16 @@ export const searchSong = async (query: string) => {
 							isExplicit: song.isExplicit,
 							duration: song.duration?.totalSeconds,
 							Artist: {
-								connect: song.artists?.map((artist) => {
-									if (artist.id != undefined) {
+								connect: song.artists.map((artist) => {
+									console.log(artist.id);
+									if (!artist.id) {
+										console.log("Picking unknown");
 										return {
-											youtubeId: artist.id as string,
+											youtubeId: "unknown",
 										};
 									} else {
 										return {
-											youtubeId: "none",
+											youtubeId: artist.id as string,
 										};
 									}
 								}),
@@ -142,9 +201,11 @@ export const searchSong = async (query: string) => {
 						isExplicit: song.isExplicit,
 						duration: song.duration?.totalSeconds,
 						Artist: {
-							connect: {
-								youtubeId: "none",
-							},
+							connect: [
+								{
+									youtubeId: "unknown",
+								},
+							],
 						},
 					},
 				});

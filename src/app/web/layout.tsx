@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { AudioBar } from "./components/audiocontrols";
 import { Header } from "./components/header";
 import styles from "./web.module.css";
+import { Song } from "@/const/metadata";
 
 const WebUIRoute = ({ children }: { children: React.ReactNode }) => {
 	const [playFunc, setPlayFunc] =

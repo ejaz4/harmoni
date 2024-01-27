@@ -11,18 +11,22 @@ datasource db {
 }
 
 model User {
-  id              String          @id @default(uuid())
-  username        String          @unique
-  name            String?
-  profileImageUrl String?
-  password        String
-  createdAt       DateTime        @default(now())
-  updatedAt       DateTime        @updatedAt
-  admin           Boolean         @default(false)
-  dataProcessing  Boolean         @default(false)
-  History         PlaylistEntry[]
-  Playlist        Playlist[]
-  Tokens          Token[]
+  id                       String          @id @default(uuid())
+  username                 String          @unique
+  name                     String?
+  profileImageUrl          String?
+  password                 String
+  createdAt                DateTime        @default(now())
+  updatedAt                DateTime        @updatedAt
+  admin                    Boolean         @default(false)
+  dataProcessing           Boolean         @default(false)
+  queuePosition            Int             @default(0)
+  Playlist                 Playlist[]
+  Tokens                   Token[]
+  queueID                  String?
+  likedPlaylistID          String?
+  recentlyPlayedPlaylistID String?
+  PlaylistEntry            PlaylistEntry[]
 }
 
 model Token {

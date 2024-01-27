@@ -1,9 +1,17 @@
 @font-face {
 	font-family: "Outfit";
-	src: url("/fonts/Outfit-font.ttf") format("truetype");
+	src: url("/fonts/PlusJakartaSans-Variable.woff2") format("woff2");
+	font-weight: normal;
+}
+
+@font-face {
+	font-family: "Outfit";
+	src: url("/fonts/PlusJakartaSans-Variable.woff2") format("woff2");
+	font-weight: bold;
 }
 
 :root {
+	/* --body-colour: #131313; */
 	--body-colour: #131313;
 	--text-color-contrast: #ffffff;
 	--font-family: "Outfit", sans-serif;

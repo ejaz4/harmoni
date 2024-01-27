@@ -4,5 +4,6 @@
 	width: 100%;
 	padding-left: var(--page-gap);
 	padding-right: var(--page-gap);
+	box-sizing: border-box;
 	height: 100%;
 }

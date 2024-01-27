@@ -8,7 +8,14 @@ import {
 	Shuffle,
 } from "lucide-react";
 import styles from "../../audiocontrols.module.css";
-import { pause, resume } from "../controls";
+import {
+	getQueuePosition,
+	pause,
+	play,
+	preloadNext,
+	resume,
+	setQueuePosition,
+} from "../controls";
 import { SeekBar } from "../seekbar";
 import { MouseEvent, MouseEventHandler, useEffect, useState } from "react";
 import { fancyTimeFormat } from "@/lib/formatting";
@@ -86,10 +93,19 @@ export const AudioControls = ({
 					console.log("Repeating");
 					audioElem.currentTime = 0;
 					audioElem.play();
+				} else {
+					setQueuePosition(getQueuePosition() + 1);
+					play();
 				}
 			});
 		}
 	}, []);
+
+	useEffect(() => {
+		if (currentTime != 0 && currentTime / duration > 0.95) {
+			preloadNext();
+		}
+	}, [currentTime]);
 
 	useEffect(() => {
 		const audioElem = document.getElementById("audio") as HTMLAudioElement;
@@ -100,6 +116,9 @@ export const AudioControls = ({
 				console.log("Repeating");
 				audioElem.currentTime = 0;
 				audioElem.play();
+			} else {
+				setQueuePosition(getQueuePosition() + 1);
+				play();
 			}
 		});
 	}, [repeat]);

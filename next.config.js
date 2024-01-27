@@ -38,7 +38,18 @@ const nextConfig = {
 				port: "",
 				pathname: "**",
 			},
+			{
+				// i.ytimg.com
+				protocol: "https",
+				hostname: "i.ytimg.com",
+				port: "",
+				pathname: "**",
+			},
 		],
+	},
+
+	env: {
+		FLUENTFFMPEG_COV: false,
 	},
 };
 

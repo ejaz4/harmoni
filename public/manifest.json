@@ -1,0 +1,10 @@
+{
+	"theme_color": "#131313",
+	"background_color": "#131313",
+	"display": "standalone",
+	"scope": "/",
+	"start_url": "/web/home",
+	"name": "Harmoni",
+	"short_name": "Harmoni",
+	"description": "Music Streaming"
+}

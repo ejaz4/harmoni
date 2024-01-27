@@ -49,7 +49,7 @@ export const AudioBar = ({
 
 		audioElem.addEventListener("durationchange", (e) => {
 			const audio = e.target as HTMLAudioElement;
-			const id = audio.src.split("/").slice(-1)[0];
+			const id = new URL(audio.src).pathname.split("/").pop() as string;
 
 			if (id !== currentID) {
 				setCurrentID(id);
