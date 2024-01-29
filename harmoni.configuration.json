@@ -1,0 +1,9 @@
+{
+	"name": "Harmoni",
+	"services": {
+		"link": true,
+		"friends": true,
+		"processing": true,
+		"mobile": true
+	}
+}
