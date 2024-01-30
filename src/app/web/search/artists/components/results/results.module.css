@@ -1,0 +1,78 @@
+.searchResultContainer {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.searchResultContainer > section,
+.searchResultContainer > div {
+	width: 100%;
+}
+
+.searchResultContainer > section {
+	max-width: 915px;
+}
+
+.result {
+	display: flex;
+	padding: 16px;
+	width: 100%;
+	gap: 16px;
+	border-radius: 12px;
+	box-sizing: border-box;
+	background-color: var(--differentiator-colour);
+	align-items: stretch;
+	justify-content: flex-start;
+	cursor: pointer;
+}
+
+.bigResult img {
+	border-radius: 8px;
+	width: 100%;
+	height: fit-content;
+	object-fit: contain;
+}
+
+.bigResult {
+	width: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 16px;
+	justify-content: flex-start;
+	word-wrap: break-word;
+}
+
+.bigResult h3,
+.bigResult div {
+	width: 100%;
+}
+
+.result label {
+	opacity: 0.5;
+}
+
+.songsResults {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.smallResult {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.otherSongsResults {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.textArea {
+	display: flex;
+	gap: 8px;
+	flex-direction: column;
+}

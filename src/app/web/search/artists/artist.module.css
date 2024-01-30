@@ -1,0 +1,83 @@
+.searchResultContainer {
+	display: flex;
+	justify-content: space-between;
+	gap: 24px;
+}
+
+.searchResultContainer > section,
+.searchResultContainer > div {
+	width: 100%;
+}
+
+.searchResultContainer > section {
+	max-width: 915px;
+}
+
+.result {
+	display: flex;
+	padding: 16px;
+	gap: 16px;
+	border-radius: 12px;
+	box-sizing: border-box;
+	background-color: var(--differentiator-colour);
+	align-items: stretch;
+	justify-content: flex-start;
+}
+
+.result img {
+	border-radius: 8px;
+	width: 100% !important;
+}
+
+.bigResult {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	justify-content: space-between;
+}
+
+.result label {
+	opacity: 0.5;
+}
+
+.artistResults {
+	display: flex;
+	flex-direction: column;
+	gap: 16px;
+}
+
+.smallResult {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	width: 100%;
+}
+
+.otherResults {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 16px;
+}
+
+@media only screen and (min-width: 1300px) {
+	.otherResults {
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.otherResults {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+	}
+}
+
+@media only screen and (max-width: 630px) {
+	.searchResultContainer > section {
+		max-width: 100%;
+		width: 100%;
+	}
+
+	.searchResultContainer {
+		display: block;
+	}
+}

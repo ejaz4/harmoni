@@ -28,3 +28,10 @@ export type Artist = {
 	updatedAt?: string;
 	Song?: Song[];
 };
+
+export type ArtistResults = {
+	artistId: string;
+	name: string;
+	thumbnailUrl: string;
+	subscribers: string;
+};

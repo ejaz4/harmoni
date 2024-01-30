@@ -1,9 +1,4 @@
-import { searchMusics } from "node-youtube-music";
 import { NextRequest, NextResponse } from "next/server";
-import { addToCache } from "@/lib/cacheManagement";
-import { join, parse } from "path";
-import fs from "fs";
-import { tmpdir } from "os";
 import { searchSong } from "@/lib/search/song";
 
 export const GET = async (request: NextRequest, response: NextResponse) => {
