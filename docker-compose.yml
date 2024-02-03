@@ -8,8 +8,7 @@ services:
             - DATABASE_URL=postgres://harmoni:${POSTGRES_PASSWORD}@postgres:5432/harmoni
         container_name: web
         hostname: web
-        ports:
-            - "3000:3000"
+        restart: always
     postgres:
         image: postgres
         networks:
@@ -20,6 +19,7 @@ services:
             POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
         container_name: postgres
         hostname: postgres
+        restart: always
 
 networks:
     internal:
