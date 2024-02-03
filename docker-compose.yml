@@ -1,0 +1,25 @@
+version: "3"
+services:
+    web:
+        build: .
+        networks:
+            - internal
+        environment:
+            - DATABASE_URL=postgres://harmoni:${POSTGRES_PASSWORD}@postgres:5432/harmoni
+        container_name: web
+        hostname: web
+        ports:
+            - "3000:3000"
+    postgres:
+        image: postgres
+        networks:
+            - internal
+        environment:
+            POSTGRES_DB: harmoni
+            POSTGRES_USER: harmoni
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        container_name: postgres
+        hostname: postgres
+
+networks:
+    internal:
